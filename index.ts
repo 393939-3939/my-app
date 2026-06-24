@@ -38,7 +38,6 @@ app.post("/users", async (req, res) => {
   res.redirect("/");
 });
 
-
 app.listen(PORT, () => {
   console.log(`サーバーが http://localhost:${PORT} で動き出したぞ。`);
 });
