@@ -17,5 +17,16 @@
     <input type="text" name="name" placeholder="名前を入力" required>
     <button type="submit">追加</button>
   </form>
+  <ul>
+  <% users.forEach(user => { %>
+    <li><%= user.name %> (<%= user.age ? user.age + '歳' : '年齢未設定' %>)</li>
+  <% }) %>
+</ul>
+
+<form action="/users" method="post">
+  <input type="text" name="name" placeholder="名前" required>
+  <input type="number" name="age" placeholder="年齢">
+  <button type="submit">追加</button>
+</form>
 </body>
 </html>
