@@ -13,3 +13,8 @@ model User {
   age Int?
 }
 
+model Task {
+  id        Int      @id @default(autoincrement())
+  content   String   // タスクの内容
+  createdAt DateTime @default(now()) // 作成日時
+}

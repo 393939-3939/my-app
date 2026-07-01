@@ -11,6 +11,20 @@
       <li><%= user.name %> - <%= user.age ? user.age : '未設定' %></li>
     <% }) %>
   </ul>
+<hr> <!-- 区切り線 -->
+
+<h1>タスク一覧</h1>
+<ul>
+  <% tasks.forEach(task => { %>
+    <li><%= task.content %> (<%= task.createdAt.toLocaleString() %>)</li>
+  <% }) %>
+</ul>
+
+<h2>タスク追加</h2>
+<form action="/tasks" method="post">
+  <input type="text" name="content" placeholder="タスクを入力" required>
+  <button type="submit">追加</button>
+</form>
 
   <h2>ユーザーを追加する</h2>
   <form action="/users" method="post">

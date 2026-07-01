@@ -19,9 +19,20 @@ app.set("views", "./views");
 app.use(express.urlencoded({ extended: true }));
 
 // トップページ：ユーザー一覧を表示する
+// app.get("/") の中でタスクも取得するように変更するぞ
 app.get("/", async (req, res) => {
   const users = await prisma.user.findMany();
-  res.render("index", { users });
+  const tasks = await prisma.task.findMany({ orderBy: { createdAt: "desc" } }); // 新しい順に取得
+  res.render("index", { users, tasks }); // tasks も渡すようにする
+});
+
+// タスク追加用の POST エンドポイントを新しく作るぞ
+app.post("/tasks", async (req, res) => {
+  const content = req.body.content;
+  if (content) {
+    await prisma.task.create({ data: { content } });
+  }
+  res.redirect("/");
 });
 
 // ユーザー追加ボタンが押されたときの処理
