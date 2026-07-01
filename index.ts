@@ -26,14 +26,19 @@ app.get("/", async (req, res) => {
 
 // ユーザー追加ボタンが押されたときの処理
 app.post("/users", async (req, res) => {
-  const { name, age } = req.body;
+  const name = req.body.name;
+  // 文字列で送られてくるので数値に変換するぞ
+  const age = Number(req.body.age);
+
+  if (isNaN(age)) {
+    res.status(400).send("年齢は数値でなければなりません。");
+    return;
+  }
+
   if (name) {
-    await prisma.user.create({
-      data: { 
-        name, 
-        age: age ? parseInt(age) : null 
-      }
-    });
+    // name と age の両方を保存するよう変更
+    const newUser = await prisma.user.create({ data: { name, age } });
+    console.log("追加:", newUser);
   }
   res.redirect("/");
 });

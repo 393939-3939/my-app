@@ -8,7 +8,7 @@
   <h1>ユーザー一覧</h1>
   <ul>
     <% users.forEach(user => { %>
-      <li><%= user.name %> (ID: <%= user.id %>)</li>
+      <li><%= user.name %> - <%= user.age ? user.age : '未設定' %></li>
     <% }) %>
   </ul>
 
