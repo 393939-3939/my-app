@@ -1,46 +1,68 @@
+<!-- views/index.ejs -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>ユーザー一覧</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>マイ・Webアプリ</title>
+  <!-- Tailwind CSS を読み込む（これだけでデザインが使えるようになるぞ） -->
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <h1>ユーザー一覧</h1>
-  <ul>
-    <% users.forEach(user => { %>
-      <li><%= user.name %> - <%= user.age ? user.age : '未設定' %></li>
-    <% }) %>
-  </ul>
-<hr> <!-- 区切り線 -->
+<body class="bg-gray-100 min-h-screen py-10">
 
-<h1>タスク一覧</h1>
-<ul>
-  <% tasks.forEach(task => { %>
-    <li><%= task.content %> (<%= task.createdAt.toLocaleString() %>)</li>
-  <% }) %>
-</ul>
+  <div class="max-w-2xl mx-auto space-y-10 px-4">
+    
+    <!-- ユーザー管理セクション -->
+    <section class="bg-white p-6 rounded-lg shadow-md">
+      <h1 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">ユーザー管理</h1>
+      
+      <ul class="space-y-2 mb-6">
+        <% users.forEach(user => { %>
+          <li class="bg-gray-50 p-3 rounded border border-gray-200 flex justify-between">
+            <span class="font-medium text-gray-700"><%= user.name %></span>
+            <span class="text-gray-500 text-sm"><%= user.age ? user.age + ' 歳' : '年齢未設定' %></span>
+          </li>
+        <% }) %>
+      </ul>
 
-<h2>タスク追加</h2>
-<form action="/tasks" method="post">
-  <input type="text" name="content" placeholder="タスクを入力" required>
-  <button type="submit">追加</button>
-</form>
+      <form action="/users" method="post" class="space-y-3">
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input type="text" name="name" placeholder="名前" required 
+            class="flex-1 border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <input type="number" name="age" placeholder="年齢" required 
+            class="w-full sm:w-24 border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        <button type="submit" 
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition">
+          ユーザーを追加
+        </button>
+      </form>
+    </section>
 
-  <h2>ユーザーを追加する</h2>
-  <form action="/users" method="post">
-    <input type="text" name="name" placeholder="名前を入力" required>
-    <button type="submit">追加</button>
-  </form>
-  <ul>
-  <% users.forEach(user => { %>
-    <li><%= user.name %> (<%= user.age ? user.age + '歳' : '年齢未設定' %>)</li>
-  <% }) %>
-</ul>
+    <!-- タスク管理セクション -->
+    <section class="bg-white p-6 rounded-lg shadow-md">
+      <h1 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">タスク一覧</h1>
+      
+      <ul class="space-y-2 mb-6">
+        <% tasks.forEach(task => { %>
+          <li class="bg-green-50 p-3 rounded border border-green-100">
+            <p class="text-gray-800"><%= task.content %></p>
+            <p class="text-xs text-gray-400 mt-1"><%= task.createdAt.toLocaleString('ja-JP') %></p>
+          </li>
+        <% }) %>
+      </ul>
 
-<form action="/users" method="post">
-  <input type="text" name="name" placeholder="名前" required>
-  <input type="number" name="age" placeholder="年齢">
-  <button type="submit">追加</button>
-</form>
+      <form action="/tasks" method="post" class="flex flex-col gap-2">
+        <input type="text" name="content" placeholder="新しいタスクを入力..." required 
+          class="border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500">
+        <button type="submit" 
+          class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition">
+          タスクを追加
+        </button>
+      </form>
+    </section>
+
+  </div>
+
 </body>
 </html>
