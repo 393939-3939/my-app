@@ -61,8 +61,8 @@
             }
 
             function renderTask(task, depth = 0) { 
-              const lightness = Math.min(100, 75 + (depth * 8));
-              const backgroundColor = `hsl(150, 30%, ${lightness}%)`;
+              const lightness = Math.max(0, 90 - (depth * 7));
+              const backgroundColor = `hsl(215, 10%, ${lightness}%)`;
               const paddingLeft = depth * 24;
           %>
             <div style="padding-left: <%= paddingLeft %>px;" class="w-full">
